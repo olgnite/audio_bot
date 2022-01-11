@@ -1,13 +1,3 @@
-from pyowm import OWM
+import webbrowser
 
-
-
-def weather():
-    owm = OWM('KEY')
-    mgr = owm.weather_manager()
-    observation = mgr.weather_at_place('Москва,Ru')
-    w = observation.weather
-
-    return w
-
-print(weather())
+webbrowser.open('https://vk.com', new=2)

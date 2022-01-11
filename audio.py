@@ -1,6 +1,7 @@
 import speech_recognition
 import os
 import random
+import webbrowser
 from pyowm import OWM
 
 
@@ -11,7 +12,8 @@ commands_dict = {
     'commands': {
         'greeting': ['привет', 'приветствую'],
         'create_task': ['добавить задачу', 'создать задачу', 'заметка'],
-        'weather' : ['москва','екатеринбург','пермь','сочи','самара','казань']
+        'weather' : ['москва','екатеринбург','пермь','сочи','самара','казань'],
+        'open_browser' : ['вконтакте', 'видео',]
     }
 }
 
@@ -28,11 +30,9 @@ def listen_command():
         return "Что вы сказали ?"
 
 
-
 def greeting():
 
     return 'Здравствуйте сэр!'
-
 
 
 def create_task():
@@ -48,14 +48,23 @@ def create_task():
 
 def weather():
     query = listen_command()
-    owm = OWM('KEY')
+    owm = OWM('3c941e564928ff51adb69307918819fa')
     mgr = owm.weather_manager()
     observation = mgr.weather_at_place(f'{query},RU')
     w = observation.weather
     temp = w.temperature('celsius')
 
-    return temp
+    return [f'Температура в городе {query} = {temp}']
 
+
+def open_browser():
+    query = listen_command()
+    if query == 'вконтакте':
+        webbrowser.open('https://vk.com/im', new=2)
+    elif query == 'видео':
+        webbrowser.open('https://www.youtube.com/', new=2)
+    else:
+        return 'Ошибка!'
 
 
 def main():
@@ -69,9 +78,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
