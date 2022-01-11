@@ -48,7 +48,7 @@ def create_task():
 
 def weather():
     query = listen_command()
-    owm = OWM('3c941e564928ff51adb69307918819fa')
+    owm = OWM('KEY')
     mgr = owm.weather_manager()
     observation = mgr.weather_at_place(f'{query},RU')
     w = observation.weather
