@@ -46,7 +46,7 @@ def create_task():
     return f'Задача {query} добавлена в todo-list'
 
 
-def weather():
+def get_weather():
     query = listen_command()
     owm = OWM('KEY')
     mgr = owm.weather_manager()
