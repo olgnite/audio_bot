@@ -4,7 +4,6 @@ import random
 import webbrowser
 from pyowm import OWM
 
-
 sr = speech_recognition.Recognizer()
 sr.pause_threshold = 0.5
 
@@ -12,8 +11,8 @@ commands_dict = {
     'commands': {
         'greeting': ['привет', 'приветствую'],
         'create_task': ['добавить задачу', 'создать задачу', 'заметка'],
-        'weather' : ['москва','екатеринбург','пермь','сочи','самара','казань'],
-        'open_browser' : ['вконтакте', 'видео',]
+        'weather': ['москва', 'екатеринбург', 'пермь', 'сочи', 'самара', 'казань'],
+        'open_browser': ['вконтакте', 'видео', ]
     }
 }
 
@@ -31,17 +30,29 @@ def listen_command():
 
 
 def greeting():
-
     return 'Здравствуйте сэр!'
 
 
-def create_task():
-
-    print('Что добавим в список дел ?')
-
-    query = listen_command()
-    with open('todo-list.txt', 'a',encoding='utf-8') as file:
+def add_task(query: str):
+    with open('todo-list.txt', 'a', encoding='utf-8') as file:
         file.write(f'{query}\n')
+
+
+def show_text(input_arg):
+    def the_real_decorator(function):
+        def wrapper():
+            print(input_arg)
+            return function()
+
+        return wrapper
+
+    return the_real_decorator
+
+
+@show_text("Что добавим в список дел?")
+def create_task():
+    query = listen_command()
+    add_task(query)
 
     return f'Задача {query} добавлена в todo-list'
 
